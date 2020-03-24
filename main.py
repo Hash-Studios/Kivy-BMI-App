@@ -155,6 +155,12 @@ KV = '''
 <Main_Screen@Screen>:
 	NavigationLayout:
 		ScreenManager:
+			canvas:
+				Color:
+					rgba: color_deep_purple
+				Rectangle:
+					pos: 0, 0
+					size: self.size[0], self.size[1]
 			Screen:
 				name: "root_screen"
 				ScreenManager:
@@ -260,7 +266,7 @@ class Custom(FloatLayout):
 		elif self.bmi>=40:
 			self.advice = "[color=5E35B1]You are [b]severely obese[/b].[/color]"
 
-		self.ban = MDBanner(opening_transition="in_elastic",type="two-line",id="banner",text=[f"[color=311B92]Your BMI is [b]{self.bmi}[/b][/color]",self.advice],vertical_pad=50,over_widget=self.parent.parent.parent.parent,)
+		self.ban = MDBanner(opening_transition="in_elastic",type="two-line",id="banner",text=[f"[color=311B92]Your BMI is [b]{self.bmi}[/b][/color]",self.advice],vertical_pad=Window.size[0]/8,over_widget=self.parent.parent.parent.parent,)
 		self.tool = MDToolbar(id="toolbar", pos_hint={"top": 1}, elevation=0)
 		self.parent.parent.parent.parent.parent.add_widget(self.ban)
 		self.ban.show()
