@@ -6,6 +6,7 @@ from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.config import Config
 from kivy.core.text.markup import MarkupLabel
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
@@ -19,6 +20,7 @@ from kivymd.uix.bottomsheet import MDListBottomSheet
 # activity = autoclass('org.kivy.android.PythonActivity').mActivity
 
 KV = '''
+#:import Window kivy.core.window.Window
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
 #:set color_deep_purple [0.36862745098,0.20784313725 ,0.69411764705,1]
 #:set color_deep_purple_dark [0.270588235,0.152941176 ,0.62745098,1]
@@ -70,6 +72,125 @@ KV = '''
 		theme_text_color: "Custom"
 		text_color: color_deep_purple_light
 		on_press: root.height_increment()
+	Label:
+		text: "[b][color=b39ddb]Weight(kg)[/color][/b]"
+		markup: True
+		font_size: self.size[0]/19
+		pos_hint: {'center_x':0.5, 'center_y': 0.71}
+	Label:
+		id: weightn
+		text: '[b][color=b39ddb]' + str(round(root.ids.weight.value)) + '[/color][/b]'
+		markup: True
+		font_size: self.size[0]/10
+		pos_hint: {'center_x':0.5, 'center_y': 0.64}
+	BoxLayout:
+		padding: 10
+		orientation:"vertical"
+		pos_hint: {'center_x':0.5, 'center_y': 0.57}
+		MDLabel:
+            text: ""
+            halign: "center"
+		MDLabel:
+            text: ""
+            halign: "center"	
+		MDSlider:
+			id: weight
+			min: 10
+			max: 150
+			value: 70
+			size_hint_x: None
+			size_hint_y: 1
+			width: Window.size[0]*0.75
+			hint: False
+			pos_hint: {'center_x':0.5, 'center_y': 0.57}
+		MDLabel:
+            text: ""
+            halign: "center"
+		MDLabel:
+            text: ""
+            halign: "center"
+	MDSwitch:
+		pos_hint: {'center_x':0.5, 'center_y': 0.38}
+		active: True
+	Label:
+		text: "[b][color=b39ddb]Male[/color][/b]"
+		markup: True
+		font_size: self.size[0]/19
+		pos_hint: {'center_x':0.25, 'center_y': 0.38}
+	Label:
+		text: "[b][color=b39ddb]Female[/color][/b]"
+		markup: True
+		font_size: self.size[0]/19
+		pos_hint: {'center_x':0.78, 'center_y': 0.38}
+	MDFloatingActionButton:
+		elevation: 0
+		icon: "google-fit"
+		user_font_size: "58sp"
+		pos_hint: {'center_x':0.5, 'center_y': 0.115}
+		theme_text_color: "Custom"
+        text_color: color_deep_purple_light
+
+<Main_Screen@ScreenManager>:
+	id: screen_manager
+	transition: FadeTransition(duration=.2, clearcolor=app.theme_cls.bg_dark)
+	Screen:
+		name: "1"
+		GridLayout:
+			cols: 1
+			canvas:
+				Color:
+					rgba: color_deep_purple
+				Rectangle:
+					pos: 0, 0
+					size: self.size[0], self.size[1]
+			Label:
+				size_hint_y: '0.10'
+			GridLayout:
+				cols: 2
+				padding: 10
+				canvas:
+					Color:
+						rgba: color_deep_purple
+					Rectangle:
+						pos: 0, 0
+						size: self.size[0], self.size[1]
+					Color:
+						rgba: color_deep_purple_dark
+					RoundedRectangle:
+						pos: self.size[1]/60, self.size[1]*0.75 + self.size[1]/60
+						size: self.size[0]/2 - self.size[1]/60 - self.size[1]/120, self.size[1]/4 - self.size[1]/60
+						radius: [20]
+					Color:
+						rgba: color_deep_purple_dark
+					RoundedRectangle:
+						pos: self.size[0]/2 + self.size[1]/120, self.size[1]*0.75 + self.size[1]/60
+						size: self.size[0]/2 - self.size[1]/30 + self.size[1]/120, self.size[1]/4 - self.size[1]/60
+						radius: [20]
+					Color:
+						rgba: color_deep_purple_dark
+					RoundedRectangle:
+						pos: self.size[1]/60, self.size[1]*0.50 + self.size[1]/60
+						size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
+						radius: [20]
+					Color:
+						rgba: color_deep_purple_dark
+					RoundedRectangle:
+						pos: self.size[1]/60, self.size[1]*0.25 + self.size[1]/60
+						size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
+						radius: [20]
+					Color:
+						rgba: color_deep_purple_dark
+					RoundedRectangle:
+						pos: self.size[1]/60, 0 + self.size[1]/60
+						size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
+						radius: [20]
+				Custom:
+
+	Screen:
+		name: "2"
+	Screen:
+		name: "3"
+
 <BoxContentForBottomSheetCustomScreenList>
     orientation: "vertical"
     padding: dp(10)
@@ -89,66 +210,7 @@ Screen:
 	NavigationLayout:
 		ScreenManager:
 			Screen:
-				ScreenManager:
-					id: screen_manager
-					transition: FadeTransition(duration=.2, clearcolor=app.theme_cls.bg_dark)
-					Screen:
-						name: "1"
-						GridLayout:
-							cols: 1
-							canvas:
-								Color:
-									rgba: color_deep_purple
-								Rectangle:
-									pos: 0, 0
-									size: self.size[0], self.size[1]
-							Label:
-								size_hint_y: '0.10'
-							GridLayout:
-								cols: 2
-								padding: 10
-								canvas:
-									Color:
-										rgba: color_deep_purple
-									Rectangle:
-										pos: 0, 0
-										size: self.size[0], self.size[1]
-									Color:
-										rgba: color_deep_purple_dark
-									RoundedRectangle:
-										pos: self.size[1]/60, self.size[1]*0.75 + self.size[1]/60
-										size: self.size[0]/2 - self.size[1]/60 - self.size[1]/120, self.size[1]/4 - self.size[1]/60
-										radius: [20]
-									Color:
-										rgba: color_deep_purple_dark
-									RoundedRectangle:
-										pos: self.size[0]/2 + self.size[1]/120, self.size[1]*0.75 + self.size[1]/60
-										size: self.size[0]/2 - self.size[1]/30 + self.size[1]/120, self.size[1]/4 - self.size[1]/60
-										radius: [20]
-									Color:
-										rgba: color_deep_purple_dark
-									RoundedRectangle:
-										pos: self.size[1]/60, self.size[1]*0.50 + self.size[1]/60
-										size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
-										radius: [20]
-									Color:
-										rgba: color_deep_purple_dark
-									RoundedRectangle:
-										pos: self.size[1]/60, self.size[1]*0.25 + self.size[1]/60
-										size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
-										radius: [20]
-									Color:
-										rgba: color_deep_purple_dark
-									RoundedRectangle:
-										pos: self.size[1]/60, 0 + self.size[1]/60
-										size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
-										radius: [20]
-								Custom:
-
-					Screen:
-						name: "2"
-					Screen:
-						name: "3"
+				Main_Screen:
 				MDToolbar:
 					id: toolbar
 					pos_hint: {"top": 1}
@@ -168,6 +230,12 @@ Screen:
 class ContentNavigationDrawer(BoxLayout):
     screen_manager = ObjectProperty()
     nav_drawer = ObjectProperty()
+
+class Main_screen(ScreenManager):
+	def __init__(self, **kwargs):
+		super(Main_screen, self).__init__(**kwargs)
+	def screen_change(self, page):
+		self.current = page
 
 class Custom(FloatLayout):
 	def __init__(self, **kwargs):
