@@ -8,45 +8,12 @@ from kivy.config import Config
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
 
-KV1 = '''
-GridLayout:
-	cols: 1
-	Label:
-		text: "Hello1"
-		font_size: self.size[0]/6
-		size_hint_y: None
-		height: self.size[0]/7
-	GridLayout:
-		cols: 2
-		padding: 10
-		canvas:
-			Color:
-				rgba: 0.2,0.2,0.2,1
-			Rectangle:
-				pos: 0, 0
-				size: self.size[0], self.size[1]
-			Color:
-				rgba: 0.4,0.4,0.4,1
-			RoundedRectangle:
-				pos: self.size[1]/60, self.size[1]*0.75
-				size: self.size[0]/2 - self.size[1]/60 - self.size[1]/120, self.size[1]/4 - self.size[1]/60
-				radius: [20]
-			Color:
-				rgba: 0.4,0.4,0.4,1
-			RoundedRectangle:
-				pos: self.size[0]/2 + self.size[1]/120, self.size[1]*0.75
-				size: self.size[0]/2 - self.size[1]/30 + self.size[1]/120, self.size[1]/4 - self.size[1]/60
-				radius: [20]
-		FloatLayout:
-			Label:
-				text: "Hello"
-				font_size: self.size[0]/8
-				pos_hint: {'center_x':0.25, 'center_y': 0.95}
-			Label:
-				text: "Hello"
-				font_size: self.size[0]/8
-				pos_hint: {'center_x':0.75, 'center_y': 0.95}
-'''
+#from android.runnable import run_on_ui_thread
+#from jnius import autoclass
+
+# Color = autoclass("android.graphics.Color")
+# WindowManager = autoclass('android.view.WindowManager$LayoutParams')
+# activity = autoclass('org.kivy.android.PythonActivity').mActivity
 
 KV = '''
 #:set color_deep_purple [0.36862745098,0.20784313725 ,0.69411764705,1]
@@ -55,6 +22,7 @@ KV = '''
 	orientation: "vertical"
     padding: "8dp"
     spacing: "8dp"
+
 	AnchorLayout:
         anchor_x: "center"
         size_hint_y: None
@@ -167,13 +135,15 @@ Screen:
 										radius: [20]
 								FloatLayout:
 									Label:
-										text: "Hello"
-										font_size: self.size[0]/8
-										pos_hint: {'center_x':0.25, 'center_y': 0.95}
+										text: "[b][color=b39ddb]Age[/color][/b]"
+										markup: True
+										font_size: self.size[0]/19
+										pos_hint: {'center_x':0.25, 'center_y': 0.97}
 									Label:
-										text: "Hello"
-										font_size: self.size[0]/8
-										pos_hint: {'center_x':0.75, 'center_y': 0.95}
+										text: "[b][color=b39ddb]Height(cms)[/color][/b]"
+										markup: True
+										font_size: self.size[0]/19
+										pos_hint: {'center_x':0.75, 'center_y': 0.97}
 
 					Screen:
 						name: "2"
@@ -185,6 +155,12 @@ Screen:
 					elevation: 0
 					title: ""
 					left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+					BoxLayout:
+						Label:
+							text: "[b][color=b39ddb]BMI Calculator[/color][/b]"
+							markup: True
+							font_size: 20
+							pos_hint: {'center_x':0, 'center_y': 0.5}
 		MDNavigationDrawer:
 			id: nav_drawer
 			elevation: 0
@@ -212,7 +188,16 @@ class MainApp(MDApp):
 		self.title = "BMI Calc"
 		Config.set('kivy', 'window_title', 'BMI Calc')
 		return Builder.load_string(KV)
+	# @run_on_ui_thread
+	# def statusbar(self,color):
+	# 	window = activity.getWindow()
+	# 	window.clearFlags(WindowManager.FLAG_TRANSLUCENT_STATUS)
+	# 	window.addFlags(WindowManager.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+	# 	window.setStatusBarColor(Color.parseColor(color)) 
+	# 	window.setNavigationBarColor(Color.parseColor(color))
 
 
 if __name__ == '__main__':
-    MainApp().run()
+	main_app = MainApp()
+	#main_app.statusbar("#5E35B1")
+	main_app.run()
