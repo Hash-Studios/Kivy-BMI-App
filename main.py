@@ -7,6 +7,7 @@ from kivy.config import Config
 
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
+from kivymd.uix.bottomsheet import MDListBottomSheet
 
 #from android.runnable import run_on_ui_thread
 #from jnius import autoclass
@@ -16,72 +17,31 @@ from kivymd.theming import ThemableBehavior
 # activity = autoclass('org.kivy.android.PythonActivity').mActivity
 
 KV = '''
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
 #:set color_deep_purple [0.36862745098,0.20784313725 ,0.69411764705,1]
 #:set color_deep_purple_dark [0.270588235,0.152941176 ,0.62745098,1]
-<ContentNavigationDrawer>:
-	orientation: "vertical"
-    padding: "8dp"
-    spacing: "8dp"
+<BoxContentForBottomSheetCustomScreenList>
+    orientation: "vertical"
+    padding: dp(10)
+    spacing: dp(10)
+    size_hint_y: None
+    height: self.minimum_height
+    pos_hint: {"top": 1}
 
-	AnchorLayout:
-        anchor_x: "center"
-        size_hint_y: None
-        height: avatar.height
+    ScrollView:
 
-        Image:
-            id: avatar
-            size_hint: None, None
-            size: "200dp", "200dp"
-            source: "icon.png"
-	ScrollView:
-		MDList:
-		    OneLineAvatarListItem:
-		        text: "1"
-
-		        on_press:
-		            root.nav_drawer.set_state("close")
-		            root.screen_manager.current = "1"
-
-		        IconLeftWidget:
-            		icon: "plus"
-            		pos_hint: {'center_x': .25, 'center_y': .5}
-            		on_press:
-				        root.nav_drawer.set_state("close")
-				        root.screen_manager.current = "1"
-		    OneLineAvatarListItem:
-		        text: "2"
-		        on_press:
-		            root.nav_drawer.set_state("close")
-		            root.screen_manager.current = "2"
-
-		        IconLeftWidget:
-            		icon: "plus"
-            		on_press:
-				        root.nav_drawer.set_state("close")
-				        root.screen_manager.current = "2"
-            		pos_hint: {'center_x': .25, 'center_y': .5}
-		    TwoLineAvatarListItem:
-		        text: "3"
-		        secondary_text: "3.1"
-		        on_press:
-		            root.nav_drawer.set_state("close")
-		            root.screen_manager.current = "3"
-		        IconLeftWidget:
-            		icon: "plus"
-            		pos_hint: {'center_x': .25, 'center_y': .5}
-            		on_press:
-				        root.nav_drawer.set_state("close")
-				        root.screen_manager.current = "Settings"
-		        MDSwitch:
-					pos_hint: {'center_x': .75, 'center_y': .5}
-					active: False
-					on_active: root.nav_drawer.set_state("close")
+        GridLayout:
+            id: box
+            size_hint_y: None
+            height: self.minimum_height
+            cols: 1
 Screen:
 	NavigationLayout:
 		ScreenManager:
 			Screen:
 				ScreenManager:
 					id: screen_manager
+					transition: FadeTransition(duration=.2, clearcolor=app.theme_cls.bg_dark)
 					Screen:
 						name: "1"
 						GridLayout:
@@ -154,20 +114,13 @@ Screen:
 					pos_hint: {"top": 1}
 					elevation: 0
 					title: ""
-					left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+					left_action_items: [["menu", lambda x: app.show_example_bottom_sheet()]]
 					BoxLayout:
 						Label:
 							text: "[b][color=b39ddb]BMI Calculator[/color][/b]"
 							markup: True
-							font_size: 20
+							font_size: self.size[0]/8
 							pos_hint: {'center_x':0, 'center_y': 0.5}
-		MDNavigationDrawer:
-			id: nav_drawer
-			elevation: 0
-
-			ContentNavigationDrawer:
-				screen_manager: screen_manager
-				nav_drawer: nav_drawer
 
 '''
 
@@ -183,11 +136,17 @@ class MainApp(MDApp):
 		app.theme_cls.primary_palette = "DeepPurple"
 		app.theme_cls.accent_palette = "DeepPurple"
 		app.theme_cls.primary_hue = "600"
-		app.theme_cls.theme_style = "Dark"
+		app.theme_cls.theme_style = "Light"
 		Window.borderless = False
 		self.title = "BMI Calc"
 		Config.set('kivy', 'window_title', 'BMI Calc')
 		return Builder.load_string(KV)
+	def show_example_bottom_sheet(self):
+		bs_menu = MDListBottomSheet()
+		bs_menu.add_item("[b][color=311B92]BMI Calculator[/color][/b]", lambda x: None, icon="google-fit")
+		bs_menu.add_item("Made by Abhay Maurya", lambda x: None, icon="dev-to",)
+		bs_menu.add_item("using Python!", lambda x: None, icon="language-python",)
+		bs_menu.open()
 	# @run_on_ui_thread
 	# def statusbar(self,color):
 	# 	window = activity.getWindow()
