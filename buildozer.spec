@@ -36,7 +36,7 @@ version = 1.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,kivymd,pyjnius
+requirements = python3,kivy,kivymd,pyjnius,plyer
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -85,7 +85,7 @@ fullscreen = 0
 android.presplash_color = #5E35B1
 
 # (list) Permissions
-#android.permissions = INTERNET
+android.permissions = VIBRATE
 
 # (int) Target Android API, should be as high as possible.
 #android.api = 27

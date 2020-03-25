@@ -16,6 +16,7 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.bottomsheet import MDListBottomSheet
 from kivymd.uix.banner import MDBanner
 from kivymd.uix.toolbar import MDToolbar
+from plyer import vibrator
 from android.runnable import run_on_ui_thread
 from jnius import autoclass
 
@@ -27,6 +28,7 @@ KV = '''
 #:import Window kivy.core.window.Window
 #:import Factory kivy.factory.Factory
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import vibrator plyer.vibrator
 #:set color_deep_purple [0.36862745098,0.20784313725 ,0.69411764705,1]
 #:set color_deep_purple_dark [0.270588235,0.152941176 ,0.62745098,1]
 #:set color_deep_purple_light [0.701960784,0.615686275 ,0.858823529,1]
@@ -108,6 +110,7 @@ KV = '''
 			width: Window.size[0]*0.75
 			hint: False
 			pos_hint: {'center_x':0.5, 'center_y': 0.57}
+			on_active: vibrator.vibrate(0.017)
 		MDLabel:
             text: ""
             halign: "center"
@@ -117,6 +120,7 @@ KV = '''
 	MDSwitch:
 		pos_hint: {'center_x':0.5, 'center_y': 0.38}
 		active: True
+		on_active: vibrator.vibrate(0.017)
 	Label:
 		text: "[b][color=b39ddb]Male[/color][/b]"
 		markup: True
@@ -130,8 +134,8 @@ KV = '''
 	MDFloatingActionButton:
 		elevation: 0
 		icon: "google-fit"
-		user_font_size: "58sp"
-		pos_hint: {'center_x':0.5, 'center_y': 0.115}
+		user_font_size: Window.size[1]/15
+		pos_hint: {'center_x':0.5, 'center_y': 0.117}
 		theme_text_color: "Custom"
         text_color: color_deep_purple_light
 		on_press: root.bmi_calc()
@@ -250,21 +254,21 @@ class Custom(FloatLayout):
 		self.bmi = 0
 	def ban_show(self):
 		if self.bmi<16:
-			self.advice = "[color=5E35B1]You are [b]severely thin[/b].[/color]"
+			self.advice = "[color=b71c1c]You are [b]severely thin[/b].[/color]"
 		elif self.bmi>=16 and self.bmi<17:
-			self.advice = "[color=5E35B1]You are [b]moderately thin[/b].[/color]"
+			self.advice = "[color=f44336]You are [b]moderately thin[/b].[/color]"
 		elif self.bmi>=17 and self.bmi<18.5:
-			self.advice = "[color=5E35B1]You are [b]mildly thin[/b].[/color]"
+			self.advice = "[color=F57F17]You are [b]mildly thin[/b].[/color]"
 		elif self.bmi>=18.5 and self.bmi<25:
-			self.advice = "[color=5E35B1]You are [b]normal[/b].[/color]"
+			self.advice = "[color=4CAF50]You are [b]normal[/b].[/color]"
 		elif self.bmi>=25 and self.bmi<30:
-			self.advice = "[color=5E35B1]You are [b]overweight[/b].[/color]"
+			self.advice = "[color=F57F17]You are [b]overweight[/b].[/color]"
 		elif self.bmi>=30 and self.bmi<35:
-			self.advice = "[color=5E35B1]You are [b]mildly obese[/b].[/color]"
+			self.advice = "[color=f44336]You are [b]mildly obese[/b].[/color]"
 		elif self.bmi>=35 and self.bmi<40:
-			self.advice = "[color=5E35B1]You are [b]moderately obese[/b].[/color]"
+			self.advice = "[color=d32f2f]You are [b]moderately obese[/b].[/color]"
 		elif self.bmi>=40:
-			self.advice = "[color=5E35B1]You are [b]severely obese[/b].[/color]"
+			self.advice = "[color=b71c1c]You are [b]severely obese[/b].[/color]"
 
 		self.ban = MDBanner(opening_transition="in_elastic",type="two-line",id="banner",text=[f"[color=311B92]Your BMI is [b]{self.bmi}[/b][/color]",self.advice],vertical_pad=Window.size[0]/8,over_widget=self.parent.parent.parent.parent,)
 		self.tool = MDToolbar(id="toolbar", pos_hint={"top": 1}, elevation=0)
@@ -272,6 +276,7 @@ class Custom(FloatLayout):
 		self.ban.show()
 
 	def height_increment(self):
+		vibrator.vibrate(0.017)
 		self._height = MarkupLabel(self._height).markup
 		self._height = int(self._height[2])
 		self._height += 1
@@ -280,6 +285,7 @@ class Custom(FloatLayout):
 		
 
 	def height_decrement(self):
+		vibrator.vibrate(0.017)
 		self._height = MarkupLabel(self._height).markup
 		self._height = int(self._height[2])
 		if self._height>0:
@@ -288,6 +294,7 @@ class Custom(FloatLayout):
 		self.ids.height.text = self._height
 
 	def age_increment(self):
+		vibrator.vibrate(0.017)
 		self._age = MarkupLabel(self._age).markup
 		self._age = int(self._age[2])
 		self._age += 1
@@ -295,6 +302,7 @@ class Custom(FloatLayout):
 		self.ids.age.text = self._age
 
 	def age_decrement(self):
+		vibrator.vibrate(0.017)
 		self._age = MarkupLabel(self._age).markup
 		self._age = int(self._age[2])
 		if self._age>0:
@@ -302,6 +310,7 @@ class Custom(FloatLayout):
 		self._age = f'[b][color=b39ddb]{self._age}[/color][/b]'
 		self.ids.age.text = self._age
 	def bmi_calc(self):
+		vibrator.vibrate(0.035)
 		self._height = MarkupLabel(self.ids.height.text).markup
 		self._height = int(self._height[2])
 		self.bmi = round(((self.ids.weight.value*10000)/(self._height**2)),1)
