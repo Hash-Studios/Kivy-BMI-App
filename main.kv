@@ -1,0 +1,212 @@
+#:import Window kivy.core.window.Window
+#:import Factory kivy.factory.Factory
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import vibrator plyer.vibrator
+#:set color_deep_purple [0.36862745098,0.20784313725 ,0.69411764705,1]
+#:set color_deep_purple_dark [0.270588235,0.152941176 ,0.62745098,1]
+#:set color_deep_purple_light [0.701960784,0.615686275 ,0.858823529,1]
+#:set color_black [0.258823529,0.258823529 ,0.258823529,1]
+#:set color_black_dark [0.129411765,0.129411765 ,0.129411765,1]
+#:set color_black_light [0.811764706,0.847058824 ,0.862745098,1]
+<Custom@FloatLayout>:
+	Label:
+		text: "[b][color=b39ddb]Age[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]Age[/color][/b]"
+		markup: True
+		font_size: self.size[0]/19
+		pos_hint: {'center_x':0.25, 'center_y': 0.97}
+	Label:
+		text: "[b][color=b39ddb]Height(cms)[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]Height(cms)[/color][/b]"
+		markup: True
+		font_size: self.size[0]/19
+		pos_hint: {'center_x':0.75, 'center_y': 0.97}
+	Label:
+		id: age
+		text: "[b][color=b39ddb]21[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]21[/color][/b]"
+		markup: True
+		font_size: self.size[0]/10
+		pos_hint: {'center_x':0.25, 'center_y': 0.9}
+	Label:
+		id: height
+		text: "[b][color=b39ddb]185[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]185[/color][/b]"
+		markup: True
+		font_size: self.size[0]/10
+		pos_hint: {'center_x':0.75, 'center_y': 0.9}
+	MDIconButton:
+		icon: "minus"
+		pos_hint: {'center_x':0.15, 'center_y': 0.83}
+		theme_text_color: "Custom"
+		text_color: color_deep_purple_light if app.theme=="purple" else color_black_light
+		on_press: root.age_decrement()
+	MDIconButton:
+		icon: "plus"
+		pos_hint: {'center_x':0.35, 'center_y': 0.83}
+		theme_text_color: "Custom"
+		text_color: color_deep_purple_light if app.theme=="purple" else color_black_light
+		on_press: root.age_increment()
+	MDIconButton:
+		icon: "minus"
+		pos_hint: {'center_x':0.65, 'center_y': 0.83}
+		theme_text_color: "Custom"
+		text_color: color_deep_purple_light if app.theme=="purple" else color_black_light
+		on_press: root.height_decrement()
+	MDIconButton:
+		icon: "plus"
+		pos_hint: {'center_x':0.85, 'center_y': 0.83}
+		theme_text_color: "Custom"
+		text_color: color_deep_purple_light if app.theme=="purple" else color_black_light
+		on_press: root.height_increment()
+	Label:
+		text: "[b][color=b39ddb]Weight(kg)[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]Weight(kg)[/color][/b]"
+		markup: True
+		font_size: self.size[0]/19
+		pos_hint: {'center_x':0.5, 'center_y': 0.71}
+	Label:
+		id: weightn
+		text: '[b][color=b39ddb]' + str(round(root.ids.weight.value)) + '[/color][/b]'  if app.theme=="purple" else '[b][color=CFD8DC]' + str(round(root.ids.weight.value)) + '[/color][/b]'
+		markup: True
+		font_size: self.size[0]/10
+		pos_hint: {'center_x':0.5, 'center_y': 0.64}
+	BoxLayout:
+		padding: 10
+		orientation:"vertical"
+		pos_hint: {'center_x':0.5, 'center_y': 0.57}
+		MDLabel:
+            text: ""
+            halign: "center"
+		MDLabel:
+            text: ""
+            halign: "center"
+		MDSlider:
+			id: weight
+			min: 10
+			max: 150
+			value: 10
+			size_hint_x: None
+			size_hint_y: 1
+			width: Window.size[0]*0.75
+			hint: False
+			pos_hint: {'center_x':0.5, 'center_y': 0.57}
+			on_active: vibrator.vibrate(0.017)
+		MDLabel:
+            text: ""
+            halign: "center"
+		MDLabel:
+            text: ""
+            halign: "center"
+	MDSwitch:
+		pos_hint: {'center_x':0.5, 'center_y': 0.38}
+		active: True
+		on_active: vibrator.vibrate(0.017)
+	Label:
+		text: "[b][color=b39ddb]Male[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]Male[/color][/b]"
+		markup: True
+		font_size: self.size[0]/19
+		pos_hint: {'center_x':0.25, 'center_y': 0.38}
+	Label:
+		text: "[b][color=b39ddb]Female[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]Female[/color][/b]"
+		markup: True
+		font_size: self.size[0]/19
+		pos_hint: {'center_x':0.78, 'center_y': 0.38}
+	MDFloatingActionButton:
+		elevation: 0
+		icon: "google-fit"
+		user_font_size: Window.size[1]/18
+		pos_hint: {'center_x':0.5, 'center_y': 0.12}
+		theme_text_color: "Custom"
+        text_color: color_deep_purple_light if app.theme=="purple" else color_black_dark
+		on_press: root.bmi_calc()
+		on_release: root.ban_show()
+
+<BoxContentForBottomSheetCustomScreenList>
+    orientation: "vertical"
+    padding: dp(10)
+    spacing: dp(10)
+    size_hint_y: None
+    height: self.minimum_height
+    pos_hint: {"top": 1}
+
+    ScrollView:
+
+        GridLayout:
+            id: box
+            size_hint_y: None
+            height: self.minimum_height
+            cols: 1
+<Main_Screen@Screen>:
+	NavigationLayout:
+		ScreenManager:
+			canvas:
+				Color:
+					rgba: color_deep_purple if app.theme=="purple" else color_black
+				Rectangle:
+					pos: 0, 0
+					size: self.size[0], self.size[1]
+			Screen:
+				name: "root_screen"
+				ScreenManager:
+					id: screen_manager
+					transition: FadeTransition(duration=.2, clearcolor=app.theme_cls.bg_dark)
+					Screen:
+						name: "1"
+						GridLayout:
+							cols: 1
+							canvas:
+								Color:
+									rgba: color_deep_purple if app.theme=="purple" else color_black
+								Rectangle:
+									pos: 0, 0
+									size: self.size[0], self.size[1]
+							Label:
+								size_hint_y: '0.10'
+							GridLayout:
+								cols: 2
+								padding: 10
+								canvas:
+									Color:
+										rgba: color_deep_purple if app.theme=="purple" else color_black
+									Rectangle:
+										pos: 0, 0
+										size: self.size[0], self.size[1]
+									Color:
+										rgba: color_deep_purple_dark if app.theme=="purple" else color_black_dark
+									RoundedRectangle:
+										pos: self.size[1]/60, self.size[1]*0.75 + self.size[1]/60
+										size: self.size[0]/2 - self.size[1]/60 - self.size[1]/120, self.size[1]/4 - self.size[1]/60
+										radius: [20]
+									Color:
+										rgba: color_deep_purple_dark if app.theme=="purple" else color_black_dark
+									RoundedRectangle:
+										pos: self.size[0]/2 + self.size[1]/120, self.size[1]*0.75 + self.size[1]/60
+										size: self.size[0]/2 - self.size[1]/30 + self.size[1]/120, self.size[1]/4 - self.size[1]/60
+										radius: [20]
+									Color:
+										rgba: color_deep_purple_dark if app.theme=="purple" else color_black_dark
+									RoundedRectangle:
+										pos: self.size[1]/60, self.size[1]*0.50 + self.size[1]/60
+										size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
+										radius: [20]
+									Color:
+										rgba: color_deep_purple_dark if app.theme=="purple" else color_black_dark
+									RoundedRectangle:
+										pos: self.size[1]/60, self.size[1]*0.25 + self.size[1]/60
+										size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
+										radius: [20]
+									Color:
+										rgba: color_deep_purple_dark if app.theme=="purple" else color_black_dark
+									RoundedRectangle:
+										pos: self.size[1]/60, 0 + self.size[1]/60
+										size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
+										radius: [20]
+								Custom:
+				MDToolbar:
+					id: toolbar
+					pos_hint: {"top": 1}
+					elevation: 0
+					title: ""
+					left_action_items: [["menu", lambda x: app.show_example_bottom_sheet()]]
+					BoxLayout:
+						Label:
+							text: "[b][color=b39ddb]BMI Calculator[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]BMI Calculator[/color][/b]"
+							markup: True
+							font_size: self.size[0]/8
+							pos_hint: {'center_x':0, 'center_y': 0.5}
