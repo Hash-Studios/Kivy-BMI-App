@@ -2,7 +2,7 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, StringProperty
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.config import Config
@@ -32,26 +32,29 @@ KV = '''
 #:set color_deep_purple [0.36862745098,0.20784313725 ,0.69411764705,1]
 #:set color_deep_purple_dark [0.270588235,0.152941176 ,0.62745098,1]
 #:set color_deep_purple_light [0.701960784,0.615686275 ,0.858823529,1]
+#:set color_black [0.258823529,0.258823529 ,0.258823529,1]
+#:set color_black_dark [0.129411765,0.129411765 ,0.129411765,1]
+#:set color_black_light [0.811764706,0.847058824 ,0.862745098,1]
 <Custom@FloatLayout>:
 	Label:
-		text: "[b][color=b39ddb]Age[/color][/b]"
+		text: "[b][color=b39ddb]Age[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]Age[/color][/b]"
 		markup: True
 		font_size: self.size[0]/19
 		pos_hint: {'center_x':0.25, 'center_y': 0.97}
 	Label:
-		text: "[b][color=b39ddb]Height(cms)[/color][/b]"
+		text: "[b][color=b39ddb]Height(cms)[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]Height(cms)[/color][/b]"
 		markup: True
 		font_size: self.size[0]/19
 		pos_hint: {'center_x':0.75, 'center_y': 0.97}
 	Label:
 		id: age
-		text: "[b][color=b39ddb]21[/color][/b]"
+		text: "[b][color=b39ddb]21[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]21[/color][/b]"
 		markup: True
 		font_size: self.size[0]/10
 		pos_hint: {'center_x':0.25, 'center_y': 0.9}
 	Label:
 		id: height
-		text: "[b][color=b39ddb]185[/color][/b]"
+		text: "[b][color=b39ddb]185[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]185[/color][/b]"
 		markup: True
 		font_size: self.size[0]/10
 		pos_hint: {'center_x':0.75, 'center_y': 0.9}
@@ -59,34 +62,34 @@ KV = '''
 		icon: "minus"
 		pos_hint: {'center_x':0.15, 'center_y': 0.83}
 		theme_text_color: "Custom"
-		text_color: color_deep_purple_light
+		text_color: color_deep_purple_light if app.theme=="purple" else color_black_light
 		on_press: root.age_decrement()
 	MDIconButton:
 		icon: "plus"
 		pos_hint: {'center_x':0.35, 'center_y': 0.83}
 		theme_text_color: "Custom"
-		text_color: color_deep_purple_light
+		text_color: color_deep_purple_light if app.theme=="purple" else color_black_light
 		on_press: root.age_increment()
 	MDIconButton:
 		icon: "minus"
 		pos_hint: {'center_x':0.65, 'center_y': 0.83}
 		theme_text_color: "Custom"
-		text_color: color_deep_purple_light
+		text_color: color_deep_purple_light if app.theme=="purple" else color_black_light
 		on_press: root.height_decrement()
 	MDIconButton:
 		icon: "plus"
 		pos_hint: {'center_x':0.85, 'center_y': 0.83}
 		theme_text_color: "Custom"
-		text_color: color_deep_purple_light
+		text_color: color_deep_purple_light if app.theme=="purple" else color_black_light
 		on_press: root.height_increment()
 	Label:
-		text: "[b][color=b39ddb]Weight(kg)[/color][/b]"
+		text: "[b][color=b39ddb]Weight(kg)[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]Weight(kg)[/color][/b]"
 		markup: True
 		font_size: self.size[0]/19
 		pos_hint: {'center_x':0.5, 'center_y': 0.71}
 	Label:
 		id: weightn
-		text: '[b][color=b39ddb]' + str(round(root.ids.weight.value)) + '[/color][/b]'
+		text: '[b][color=b39ddb]' + str(round(root.ids.weight.value)) + '[/color][/b]'  if app.theme=="purple" else '[b][color=CFD8DC]' + str(round(root.ids.weight.value)) + '[/color][/b]'
 		markup: True
 		font_size: self.size[0]/10
 		pos_hint: {'center_x':0.5, 'center_y': 0.64}
@@ -122,22 +125,22 @@ KV = '''
 		active: True
 		on_active: vibrator.vibrate(0.017)
 	Label:
-		text: "[b][color=b39ddb]Male[/color][/b]"
+		text: "[b][color=b39ddb]Male[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]Male[/color][/b]"
 		markup: True
 		font_size: self.size[0]/19
 		pos_hint: {'center_x':0.25, 'center_y': 0.38}
 	Label:
-		text: "[b][color=b39ddb]Female[/color][/b]"
+		text: "[b][color=b39ddb]Female[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]Female[/color][/b]"
 		markup: True
 		font_size: self.size[0]/19
 		pos_hint: {'center_x':0.78, 'center_y': 0.38}
 	MDFloatingActionButton:
 		elevation: 0
 		icon: "google-fit"
-		user_font_size: Window.size[1]/15
-		pos_hint: {'center_x':0.5, 'center_y': 0.117}
+		user_font_size: Window.size[1]/18
+		pos_hint: {'center_x':0.5, 'center_y': 0.12}
 		theme_text_color: "Custom"
-        text_color: color_deep_purple_light
+        text_color: color_deep_purple_light if app.theme=="purple" else color_black_dark
 		on_press: root.bmi_calc()
 		on_release: root.ban_show()
 
@@ -161,7 +164,7 @@ KV = '''
 		ScreenManager:
 			canvas:
 				Color:
-					rgba: color_deep_purple
+					rgba: color_deep_purple if app.theme=="purple" else color_black
 				Rectangle:
 					pos: 0, 0
 					size: self.size[0], self.size[1]
@@ -176,7 +179,7 @@ KV = '''
 							cols: 1
 							canvas:
 								Color:
-									rgba: color_deep_purple
+									rgba: color_deep_purple if app.theme=="purple" else color_black
 								Rectangle:
 									pos: 0, 0
 									size: self.size[0], self.size[1]
@@ -187,36 +190,36 @@ KV = '''
 								padding: 10
 								canvas:
 									Color:
-										rgba: color_deep_purple
+										rgba: color_deep_purple if app.theme=="purple" else color_black
 									Rectangle:
 										pos: 0, 0
 										size: self.size[0], self.size[1]
 									Color:
-										rgba: color_deep_purple_dark
+										rgba: color_deep_purple_dark if app.theme=="purple" else color_black_dark
 									RoundedRectangle:
 										pos: self.size[1]/60, self.size[1]*0.75 + self.size[1]/60
 										size: self.size[0]/2 - self.size[1]/60 - self.size[1]/120, self.size[1]/4 - self.size[1]/60
 										radius: [20]
 									Color:
-										rgba: color_deep_purple_dark
+										rgba: color_deep_purple_dark if app.theme=="purple" else color_black_dark
 									RoundedRectangle:
 										pos: self.size[0]/2 + self.size[1]/120, self.size[1]*0.75 + self.size[1]/60
 										size: self.size[0]/2 - self.size[1]/30 + self.size[1]/120, self.size[1]/4 - self.size[1]/60
 										radius: [20]
 									Color:
-										rgba: color_deep_purple_dark
+										rgba: color_deep_purple_dark if app.theme=="purple" else color_black_dark
 									RoundedRectangle:
 										pos: self.size[1]/60, self.size[1]*0.50 + self.size[1]/60
 										size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
 										radius: [20]
 									Color:
-										rgba: color_deep_purple_dark
+										rgba: color_deep_purple_dark if app.theme=="purple" else color_black_dark
 									RoundedRectangle:
 										pos: self.size[1]/60, self.size[1]*0.25 + self.size[1]/60
 										size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
 										radius: [20]
 									Color:
-										rgba: color_deep_purple_dark
+										rgba: color_deep_purple_dark if app.theme=="purple" else color_black_dark
 									RoundedRectangle:
 										pos: self.size[1]/60, 0 + self.size[1]/60
 										size: self.size[0] - self.size[1]/15 + self.size[1]/30, self.size[1]/4 - self.size[1]/60
@@ -230,7 +233,7 @@ KV = '''
 					left_action_items: [["menu", lambda x: app.show_example_bottom_sheet()]]
 					BoxLayout:
 						Label:
-							text: "[b][color=b39ddb]BMI Calculator[/color][/b]"
+							text: "[b][color=b39ddb]BMI Calculator[/color][/b]" if app.theme=="purple" else "[b][color=CFD8DC]BMI Calculator[/color][/b]"
 							markup: True
 							font_size: self.size[0]/8
 							pos_hint: {'center_x':0, 'center_y': 0.5}
@@ -249,8 +252,8 @@ class Main_Screen(FloatLayout):
 class Custom(FloatLayout):
 	def __init__(self, **kwargs):
 		super(Custom, self).__init__(**kwargs)
-		self._height = "[b][color=b39ddb]185[/color][/b]"
-		self._age = "[b][color=b39ddb]21[/color][/b]"
+		self._height = "[b][color=b39ddb]185[/color][/b]" if main_app.theme == "purple" else f"[b][color=CFD8DC]185[/b][/color]"
+		self._age = "[b][color=b39ddb]21[/color][/b]" if main_app.theme == "purple" else f"[b][color=CFD8DC]21[/b][/color]"
 		self.bmi = 0
 	def ban_show(self):
 		if self.bmi<16:
@@ -269,8 +272,8 @@ class Custom(FloatLayout):
 			self.advice = "[color=d32f2f]You are [b]moderately obese[/b].[/color]"
 		elif self.bmi>=40:
 			self.advice = "[color=b71c1c]You are [b]severely obese[/b].[/color]"
-
-		self.ban = MDBanner(opening_transition="in_elastic",type="two-line",id="banner",text=[f"[color=311B92]Your BMI is [b]{self.bmi}[/b][/color]",self.advice],vertical_pad=Window.size[0]/8,over_widget=self.parent.parent.parent.parent,)
+		self.bmi_text = f"[color=311B92]Your BMI is [b]{self.bmi}[/b][/color]" if main_app.theme == "purple" else f"[color=263238]Your BMI is [b]{self.bmi}[/b][/color]"
+		self.ban = MDBanner(opening_transition="in_elastic",type="two-line",id="banner",text=[self.bmi_text,self.advice],vertical_pad=Window.size[0]/8,over_widget=self.parent.parent.parent.parent,)
 		self.tool = MDToolbar(id="toolbar", pos_hint={"top": 1}, elevation=0)
 		self.parent.parent.parent.parent.parent.add_widget(self.ban)
 		self.ban.show()
@@ -280,7 +283,7 @@ class Custom(FloatLayout):
 		self._height = MarkupLabel(self._height).markup
 		self._height = int(self._height[2])
 		self._height += 1
-		self._height = f'[b][color=b39ddb]{self._height}[/color][/b]'
+		self._height = f'[b][color=b39ddb]{self._height}[/color][/b]' if main_app.theme == "purple" else f"[b][color=CFD8DC]{self._height}[/b][/color]"
 		self.ids.height.text = self._height
 		
 
@@ -290,7 +293,7 @@ class Custom(FloatLayout):
 		self._height = int(self._height[2])
 		if self._height>0:
 			self._height -= 1
-		self._height = f'[b][color=b39ddb]{self._height}[/color][/b]'
+		self._height = f'[b][color=b39ddb]{self._height}[/color][/b]' if main_app.theme == "purple" else f"[b][color=CFD8DC]{self._height}[/b][/color]"
 		self.ids.height.text = self._height
 
 	def age_increment(self):
@@ -298,7 +301,7 @@ class Custom(FloatLayout):
 		self._age = MarkupLabel(self._age).markup
 		self._age = int(self._age[2])
 		self._age += 1
-		self._age = f'[b][color=b39ddb]{self._age}[/color][/b]'
+		self._age = f'[b][color=b39ddb]{self._age}[/color][/b]' if main_app.theme == "purple" else f"[b][color=CFD8DC]{self._age}[/b][/color]"
 		self.ids.age.text = self._age
 
 	def age_decrement(self):
@@ -307,33 +310,58 @@ class Custom(FloatLayout):
 		self._age = int(self._age[2])
 		if self._age>0:
 			self._age -= 1
-		self._age = f'[b][color=b39ddb]{self._age}[/color][/b]'
+		self._age = f'[b][color=b39ddb]{self._age}[/color][/b]' if main_app.theme == "purple" else f"[b][color=CFD8DC]{self._age}[/b][/color]"
 		self.ids.age.text = self._age
 	def bmi_calc(self):
 		vibrator.vibrate(0.035)
 		self._height = MarkupLabel(self.ids.height.text).markup
 		self._height = int(self._height[2])
 		self.bmi = round(((self.ids.weight.value*10000)/(self._height**2)),1)
-		self._height = f'[b][color=b39ddb]{self._height}[/color][/b]'
+		self._height = f'[b][color=b39ddb]{self._height}[/color][/b]' if main_app.theme == "purple" else f"[b][color=CFD8DC]{self._height}[/b][/color]"
 		self.ids.height.text = self._height
 
 
 	
 class MainApp(MDApp):
+	theme = StringProperty('purple')
 	def build(self):
 		app = MDApp.get_running_app()
-		app.theme_cls.primary_palette = "DeepPurple"
-		app.theme_cls.accent_palette = "DeepPurple"
-		app.theme_cls.primary_hue = "600"
-		app.theme_cls.theme_style = "Light"
+		if self.theme=='purple':
+			app.theme_cls.primary_palette = "DeepPurple"
+			app.theme_cls.accent_palette = "DeepPurple"
+			app.theme_cls.primary_hue = "600"
+			app.statusbar("#5E35B1")
+		else:
+			app.statusbar("#424242")
+			app.theme_cls.primary_palette = "Gray"
+			app.theme_cls.accent_palette = "Gray"
+			app.theme_cls.primary_hue = "800"
+		
 		Window.borderless = False
 		self.title = "BMI Calc"
 		Config.set('kivy', 'window_title', 'BMI Calc')
 		Builder.load_string(KV)
 		return Factory.Main_Screen()
+	def themer(self):
+		app = MDApp.get_running_app()
+		if self.theme=="purple":
+			self.theme="dark"
+			app.statusbar("#424242")
+			app.theme_cls.primary_palette = "Gray"
+			app.theme_cls.accent_palette = "Gray"
+			app.theme_cls.primary_hue = "800"
+			print(self.theme)
+		else:
+			self.theme="purple"
+			app.statusbar("#5E35B1")
+			app.theme_cls.primary_palette = "DeepPurple"
+			app.theme_cls.accent_palette = "DeepPurple"
+			app.theme_cls.primary_hue = "600"
+			print(self.theme)
 	def show_example_bottom_sheet(self):
 		bs_menu = MDListBottomSheet()
-		bs_menu.add_item("[b][color=311B92]BMI Calculator[/color][/b]", lambda x: None, icon="google-fit")
+		bs_menu.add_item("[b][color=311B92]Change Theme[/color][/b]" if main_app.theme == "purple" else f"[b][color=263238]Change Theme[/b][/color]", lambda x: self.themer(), icon="theme-light-dark")
+		bs_menu.add_item("[b][color=311B92]BMI Calculator[/color][/b]" if main_app.theme == "purple" else f"[b][color=263238]BMI Calculator[/b][/color]", lambda x: None, icon="google-fit")
 		bs_menu.add_item("Made by Abhay Maurya", lambda x: None, icon="dev-to",)
 		bs_menu.add_item("using Python!", lambda x: None, icon="language-python",)
 		bs_menu.open()
@@ -349,5 +377,4 @@ class MainApp(MDApp):
 
 if __name__ == '__main__':
 	main_app = MainApp()
-	main_app.statusbar("#5E35B1")
 	main_app.run()
