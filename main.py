@@ -17,7 +17,7 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.bottomsheet import MDListBottomSheet
 from kivymd.uix.banner import MDBanner
 from kivymd.uix.toolbar import MDToolbar
-from plyer import vibrator
+# from plyer import vibrator
 from android.runnable import run_on_ui_thread
 from jnius import autoclass
 
@@ -68,7 +68,7 @@ class Custom(FloatLayout):
         self.ban.show()
 
     def height_increment(self):
-        vibrator.vibrate(0.017)
+        # vibrator.vibrate(0.017)
         self._height = MarkupLabel(self._height).markup
         self._height = int(self._height[2])
         self._height += 1
@@ -76,7 +76,7 @@ class Custom(FloatLayout):
         self.ids.height.text = self._height
 
     def height_decrement(self):
-        vibrator.vibrate(0.017)
+        # vibrator.vibrate(0.017)
         self._height = MarkupLabel(self._height).markup
         self._height = int(self._height[2])
         if self._height > 0:
@@ -85,7 +85,7 @@ class Custom(FloatLayout):
         self.ids.height.text = self._height
 
     def age_increment(self):
-        vibrator.vibrate(0.017)
+        # vibrator.vibrate(0.017)
         self._age = MarkupLabel(self._age).markup
         self._age = int(self._age[2])
         self._age += 1
@@ -93,7 +93,7 @@ class Custom(FloatLayout):
         self.ids.age.text = self._age
 
     def age_decrement(self):
-        vibrator.vibrate(0.017)
+        # vibrator.vibrate(0.017)
         self._age = MarkupLabel(self._age).markup
         self._age = int(self._age[2])
         if self._age > 0:
@@ -102,7 +102,7 @@ class Custom(FloatLayout):
         self.ids.age.text = self._age
 
     def bmi_calc(self):
-        vibrator.vibrate(0.035)
+        # vibrator.vibrate(0.035)
         self._height = MarkupLabel(self.ids.height.text).markup
         self._height = int(self._height[2])
         self.bmi = round(((self.ids.weight.value*10000)/(self._height**2)), 1)
