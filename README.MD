@@ -80,7 +80,6 @@ Start by forking the repository, and then run `pip3 install -r requirements.txt`
 >Note: This project requires Kivy Framework alog with its dependencies to be installed on your machine.
 
 
-![Prism UI Mockup](demo/Prism_Mockup2.jpg)
 
 ## License
 
