@@ -1,0 +1,4 @@
+kivy==2.0.0rc1
+kivymd==0.104.0
+plyer
+pyjnius
