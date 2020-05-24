@@ -7,6 +7,8 @@
 ![License](https://img.shields.io/github/license/Hash-Studios/Kivy-BMI-App)
 ![Stars](https://img.shields.io/github/stars/Hash-Studios/Kivy-BMI-App)
 
+![](demo/KivyBMI.jpg)
+
 This app is a cross-platform BMI Calculator which is completely developed using Python3 and kivy framework.
 KivyMD widgets were also used.
 
